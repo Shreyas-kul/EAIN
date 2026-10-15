@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     ANTHROPIC_API_KEY: str = ""
     GROQ_API_KEY: str = ""
 
+    # Database & Cache (PostgreSQL + Redis with zero-cost fallbacks)
+    DATABASE_URL: str = "sqlite+aiosqlite:///./eain.db"
+    REDIS_URL: str = "redis://localhost:6379/0"
+
     # Model Pricing Registry ($ per 1 Million tokens)
     MODEL_REGISTRY: Dict[str, ModelPricing] = {
         "gemini/gemini-1.5-flash": ModelPricing(

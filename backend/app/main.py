@@ -1,12 +1,21 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.api.routes import router as api_router
+from app.db.session import init_db
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize DB tables on startup
+    await init_db()
+    yield
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
-    description="FAANG-grade Universal Enterprise LLM Gateway with Context Window Optimizer and Telemetry"
+    description="FAANG-grade Universal Enterprise LLM Gateway with Context Window Optimizer and Telemetry",
+    lifespan=lifespan
 )
 
 # Enable CORS for universal global access

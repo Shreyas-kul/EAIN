@@ -8,6 +8,9 @@ env/
 venv/
 ENV/
 .venv/
+*.db
+*.sqlite
+*.sqlite3
 
 # Environment Variables & Secrets
 .env

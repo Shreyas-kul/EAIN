@@ -61,10 +61,71 @@ def test_optimize_preview_dedup():
     data = res.json()
     assert data["metadata"]["tokens_saved"] > 0
 
+def test_jev_evaluation():
+    payload = {
+        "prompt": "Can you analyze this architecture diagram screenshot and find the bug in this function?",
+        "custom_questions": {
+            "is_bug_fix": {
+                "type": "noul",
+                "instructions": "The user is asking to find or fix a bug in software"
+            }
+        }
+    }
+    res = client.post("/api/jev/evaluate", json=payload)
+    assert res.status_code == 200
+    data = res.json()
+    assert data["system_1_evaluation"]["needs_vision"] is True
+    assert data["system_1_evaluation"]["is_coding"] is True
+    assert "is_bug_fix" in data["custom_questions"]
+
+def test_opencv_vision():
+    import cv2
+    import numpy as np
+    import base64
+
+    # Create dummy 1000x1000 image in memory
+    dummy_img = np.zeros((1000, 1000, 3), dtype=np.uint8)
+    _, buf = cv2.imencode(".jpg", dummy_img)
+    b64_str = base64.b64encode(buf.tobytes()).decode("utf-8")
+
+    payload = {
+        "image_base64": b64_str,
+        "max_dimension": 512,
+        "jpeg_quality": 75
+    }
+    res = client.post("/api/vision/optimize", json=payload)
+    assert res.status_code == 200
+    data = res.json()
+    assert data["metadata"]["tokens_saved"] >= 0
+    assert "optimized_image_base64" in data
+
+def test_database_and_telemetry():
+    # Test telemetry stats endpoint
+    res = client.get("/api/telemetry/stats")
+    assert res.status_code == 200
+    stats = res.json()
+    assert "total_queries" in stats
+    assert "total_tokens_saved" in stats
+
+    # Test history endpoint
+    res = client.get("/api/history/test_session")
+    assert res.status_code == 200
+    history = res.json()
+    assert "messages" in history
+
 if __name__ == "__main__":
+    import asyncio
+    from app.db.session import init_db
+    asyncio.run(init_db())
+
     test_health()
     test_models_list()
     test_token_service()
     test_optimize_preview_map_reduce()
     test_optimize_preview_dedup()
+    test_jev_evaluation()
+    test_opencv_vision()
+    test_database_and_telemetry()
     print("All backend tests PASSED successfully!")
+
+
