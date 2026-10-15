@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# Environment Variables & Secrets
+.env
+.env.local
+*.env
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Next.js / Vite build outputs
+.next/
+out/
+dist/
+build/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
