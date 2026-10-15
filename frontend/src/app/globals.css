@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #07070f;
+  --bg-secondary: #0e0e1a;
+  --bg-glass: rgba(255, 255, 255, 0.04);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --accent-cyan: #22d3ee;
+  --accent-violet: #a855f7;
+  --accent-emerald: #10b981;
+  --accent-pink: #ec4899;
+  --text-primary: #f1f5f9;
+  --text-muted: #64748b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-inter), sans-serif;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ─── Scrollbar ─────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(168,85,247,0.3); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(168,85,247,0.6); }
+
+/* ─── Glass Card ────────────────────────── */
+.glass-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px;
+}
+
+/* ─── Glow Orbs ─────────────────────────── */
+.glow-cyan  { box-shadow: 0 0 24px rgba(34,211,238,0.20); }
+.glow-violet{ box-shadow: 0 0 24px rgba(168,85,247,0.20); }
+.glow-emerald{ box-shadow: 0 0 24px rgba(16,185,129,0.20); }
+
+/* ─── Streaming Cursor ───────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.streaming-cursor::after {
+  content: "▋";
+  color: var(--accent-cyan);
+  animation: blink 0.8s ease-in-out infinite;
+  font-size: 0.85em;
+}
+
+/* ─── Fade In ────────────────────────────── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fadeSlideUp 0.35s ease-out forwards;
+}
+
+/* ─── Gradient Text ─────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-violet) 50%, var(--accent-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── User Bubble ────────────────────────── */
+.bubble-user {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  border-radius: 18px 18px 4px 18px;
+}
+
+/* ─── AI Bubble ──────────────────────────── */
+.bubble-ai {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(34,211,238,0.12);
+  border-radius: 4px 18px 18px 18px;
+}
+
+/* ─── Pulse Badge ────────────────────────── */
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+.pulse-dot {
+  animation: pulseDot 1.4s ease-in-out infinite;
+}
+
+/* ─── Telemetry Card Hover ───────────────── */
+.telemetry-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.telemetry-card:hover {
+  transform: translateY(-2px);
+}
+
+/* ─── Sidebar Active ─────────────────────── */
+.sidebar-active {
+  background: linear-gradient(135deg, rgba(34,211,238,0.15) 0%, rgba(168,85,247,0.15) 100%);
+  border: 1px solid rgba(34,211,238,0.3);
+}
+
+/* ─── Input Glow ─────────────────────────── */
+.input-glow:focus-within {
+  box-shadow: 0 0 0 1px rgba(168,85,247,0.5), 0 0 24px rgba(168,85,247,0.12);
+}
+
+/* ─── Optimizer Pill ─────────────────────── */
+.opt-pill {
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.opt-pill:hover {
+  border-color: rgba(34,211,238,0.4);
+  background: rgba(34,211,238,0.08);
+  color: var(--accent-cyan);
+}
+.opt-pill.active {
+  border-color: rgba(168,85,247,0.6);
+  background: rgba(168,85,247,0.15);
+  color: var(--accent-violet);
+  box-shadow: 0 0 12px rgba(168,85,247,0.2);
+}

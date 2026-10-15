@@ -20,6 +20,11 @@ def setup_environment_keys():
         os.environ["ANTHROPIC_API_KEY"] = settings.ANTHROPIC_API_KEY
     if settings.GROQ_API_KEY:
         os.environ["GROQ_API_KEY"] = settings.GROQ_API_KEY
+    if settings.OPENROUTER_API_KEY:
+        os.environ["OPENROUTER_API_KEY"] = settings.OPENROUTER_API_KEY
+    if settings.HUGGINGFACE_API_KEY:
+        os.environ["HUGGINGFACE_API_KEY"] = settings.HUGGINGFACE_API_KEY
+        os.environ["HF_TOKEN"] = settings.HUGGINGFACE_API_KEY
 
 async def mock_stream_response(model: str, messages: List[Dict[str, Any]]) -> AsyncGenerator[str, None]:
     """Fallback high-speed mock streamer when no API keys are provided, allowing instant testability."""
@@ -85,7 +90,9 @@ async def stream_llm_response(
         ("gpt" in model and os.getenv("OPENAI_API_KEY")) or
         ("claude" in model and os.getenv("ANTHROPIC_API_KEY")) or
         ("groq" in model and os.getenv("GROQ_API_KEY")) or
-        bool(os.getenv("OPENAI_API_KEY") or os.getenv("GEMINI_API_KEY"))
+        ("openrouter" in model and os.getenv("OPENROUTER_API_KEY")) or
+        ("huggingface" in model and (os.getenv("HUGGINGFACE_API_KEY") or os.getenv("HF_TOKEN"))) or
+        bool(os.getenv("OPENROUTER_API_KEY") or os.getenv("GEMINI_API_KEY"))
     )
 
     if not has_key:

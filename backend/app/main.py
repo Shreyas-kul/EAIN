@@ -14,7 +14,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
-    description="FAANG-grade Universal Enterprise LLM Gateway with Context Window Optimizer and Telemetry",
+    description="A Enterprise LLM Gateway with Context Window Optimizer and Telemetry",
     lifespan=lifespan
 )
 
