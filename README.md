@@ -1,8 +1,8 @@
-# OmniLens AI ⚡
+# EAIN ⚡
 
 > **Universal Enterprise LLM Gateway & Real-Time Context Window Optimizer**
 
-OmniLens AI is a FAANG-grade, multi-model AI gateway engineered for ultra-low latency, granular cost/token telemetry, and interactive context window optimization (Map-Reduce, semantic deduplication, and sliding-window pruning).
+EAIN is a FAANG-grade, multi-model AI gateway engineered for ultra-low latency, granular cost/token telemetry, and interactive context window optimization (Map-Reduce, semantic deduplication, and sliding-window pruning).
 
 ---
 
